@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.springbootmybatis.mapper.StudentMapper">
+
+    <resultMap id="BaseResultMap" type="com.example.springbootmybatis.model.Student">
+        <result column="id" jdbcType="VARCHAR" property="id" />
+        <result column="name" jdbcType="VARCHAR" property="name" />
+        <result column="age" jdbcType="INTEGER" property="age" />
+        <result column="school" jdbcType="VARCHAR" property="school" />
+        <result column="majority" jdbcType="VARCHAR" property="majority" />
+        <result column="class" jdbcType="VARCHAR" property="group" />
+    </resultMap>
+
+    <select id="select" resultType="com.example.springbootmybatis.model.Student">
+        select * from stu_info where id = #{id}
+    </select>
+    <select id="selectByCondition" resultMap="BaseResultMap">
+        select * from stu_info where
+        <if test="name != null">
+         name like #{name}
+        </if>
+    </select>
+<!--  id要和mapper中方法名称相同  -->
+<!--  values中对应的是实体类中的属性名称，不是数据库表表中的列名  -->
+    <insert id = "insertStu" parameterType="com.example.springbootmybatis.model.Student">
+        insert into
+        stu_info
+        (
+        id,
+        name,
+        age,
+        school,
+        majority,
+        class
+        )
+        values
+        (
+        #{student.id,jdbcType=VARCHAR},
+        #{student.name,jdbcType=VARCHAR},
+        #{student.age,jdbcType=VARCHAR},
+        #{student.school,jdbcType=VARCHAR},
+        #{student.majority,jdbcType=VARCHAR},
+        #{student.group,jdbcType=VARCHAR}
+        )
+
+    </insert>
+
+</mapper>
